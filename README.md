@@ -1,220 +1,217 @@
-Title => Finance Data Processing and Access Control Backend
+# Finance Backend — Simple Documentation
 
-This project implements a backend system for a Finance Dashboard that manages financial records and enforces role-based access control.
+## Project Overview
 
-The system allows different users (Viewer, Analyst, Admin) to interact with financial data based on permissions. It supports:
-User management
-Role-based access control
-Financial records management
-Dashboard summary analytics
-Input validation
-Error handling
-Data persistence using MySQL
+This project is a backend system for managing financial records with role-based access control. It demonstrates API design, authentication, authorization, validation, and database operations using Node.js and MySQL.
 
-The backend is built using:
-Node.js
-Express.js
-MySQL
-JWT Authentication
-Sequelize ORM
-Tech Stack
+The system allows different users (Admin, Analyst, Viewer) to interact with financial data based on their permissions.
 
-Backend:
-Node.js
-Express.js
+---
 
-Database:
-MySQL
+## Technology Stack
 
-Authentication:
-JSON Web Token (JWT)
+* Node.js
+* Express.js
+* MySQL
+* Sequelize ORM
+* JWT Authentication
+* Joi Validation
+* bcrypt
 
-Validation:
-Joi
+---
 
-ORM:
-Sequelize
+## Features
 
-Other:
-dotenv
-bcrypt
-cors
-morgan
-Features
+### User Management
 
-1. User and Role Management
-The system supports:
-Create users
-Assign roles
-Activate / deactivate users
-Restrict actions based on roles
+* Register user
+* Login user
+* Assign roles
+* Activate / deactivate users
+* Role-based access control
 
 Roles:
 
-Admin
-Full access
-Manage users
-Manage financial records
+* ADMIN — Full access
+* ANALYST — View records and dashboard
+* VIEWER — View dashboard only
 
-Analyst
-View records
-Access dashboard summaries
+---
 
-Viewer
-View dashboard data only
+### Financial Records
 
-2. Financial Records Management
+Each record contains:
 
-Each financial record contains:
-id
-amount
-type (income / expense)
-category
-date
-description
-created_by
+* amount
+* type (income or expense)
+* category
+* date
+* description
 
-Operations supported:
-Create record
-Get records
-Update record
-Delete record
-Filter records
+Operations:
 
-Filters:
-date range
-category
-type
+* Create record
+* Get records
+* Update record
+* Delete record
+* Filter records
+* Pagination support
 
-3. Dashboard Summary APIs
-The system provides aggregated financial data:
-Total Income
-Total Expenses
-Net Balance
-Category-wise totals
-Recent transactions
-Monthly trends
+---
 
-Example:
-GET /api/dashboard/summary
+### Dashboard APIs
 
-Response:
-{
-  totalIncome: 50000,
-  totalExpense: 30000,
-  netBalance: 20000
-}
-4. Access Control Logic
-Role-based access control is implemented using middleware.
+* Total income
+* Total expenses
+* Net balance
+* Category totals
+* Recent transactions
+* Monthly trends
 
-Permissions:
+---
 
-Viewer:
-View dashboard only
+## Project Structure
 
-Analyst:
-View records
-View dashboard
+finance-backend/
 
-Admin:
-Create records
-Update records
-Delete records
-Manage users
+src/
 
-5. Validation and Error Handling
-The system includes:
-Input validation using Joi
-Meaningful error messages
-HTTP status codes
-Safe database operations
+* config/
+* controllers/
+* middleware/
+* models/
+* routes/
+* services/
+* utils/
+* validations/
 
-Example:
-400 Bad Request
-401 Unauthorized
-403 Forbidden
-404 Not Found
-500 Internal Server Error
-6. Data Persistence
+server.js
 
-The system uses:
-MySQL database
+package.json
 
-Sequelize ORM
-Tables:
-Users
-Roles
+README.md
 
-FinancialRecords
-Authentication Flow
-User logs in
-Server validates credentials
-JWT token generated
-Token used for API access
+---
 
-Authorization header:
+## Installation
 
-Authorization: Bearer TOKEN
+### 1. Install dependencies
 
-API Endpoints
-Authentication
+npm install
+
+### 2. Configure environment variables
+
+Create .env file:
+
+PORT=5000
+
+DB_HOST=localhost
+
+DB_USER=root
+
+DB_PASSWORD=your_password
+
+DB_NAME=finance_db
+
+JWT_SECRET=your_secret_key
+
+### 3. Run server
+
+npm run dev
+
+Server runs on:
+
+[http://localhost:5000](http://localhost:5000)
+
+---
+
+## Default Admin User
+
+Email:
+
+[admin@gmail.com]
+
+Password:
+
+123456
+
+Role:
+
+ADMIN
+
+---
+
+## API Base URL
+
+[http://localhost:5000/api](http://localhost:5000/api)
+
+---
+
+## Authentication APIs
+
+Register:
+
 POST /api/auth/register
+
+Login:
+
 POST /api/auth/login
 
-Users
+---
+
+## User APIs
+
+Get Users:
+
 GET /api/users
-POST /api/users
-PUT /api/users/:id
+
+Update Role:
+
+PATCH /api/users/:id/role
+
+Deactivate User:
+
 PATCH /api/users/:id/status
 
-Financial Records
+---
+
+## Record APIs
+
+Create Record:
+
 POST /api/records
+
+Get Records:
+
 GET /api/records
+
+Update Record:
+
 PUT /api/records/:id
+
+Delete Record:
+
 DELETE /api/records/:id
 
-Dashboard
+---
+
+## Dashboard APIs
+
 GET /api/dashboard/summary
-GET /api/dashboard/category-summary
-GET /api/dashboard/recent-transactions
-GET /api/dashboard/monthly-trends
 
-Database Schema
+GET /api/dashboard/category
 
-Users Table
-id INT PRIMARY KEY
-name VARCHAR
-email VARCHAR UNIQUE
-password VARCHAR
-role ENUM
-status BOOLEAN
-created_at
-updated_at
+GET /api/dashboard/recent
 
-Roles Table
-id INT PRIMARY KEY
-role_name VARCHAR
+GET /api/dashboard/monthly
 
-FinancialRecords Table
-id INT PRIMARY KEY
-amount DECIMAL
-type ENUM
-category VARCHAR
-date DATE
-description TEXT
-created_by INT
-created_at
-updated_at
+---
 
-Security Features
-Password hashing using bcrypt
-JWT authentication
-Role-based authorization
-Input validation
-Protected routes
+## Security
 
-Assumptions
-Users must login before accessing APIs
-Only Admin can manage users
-Financial records belong to system users
-Viewer role has read-only access
+* Password hashing
+* JWT authentication
+* Role-based authorization
+* Input validation
+* Error handling
+
