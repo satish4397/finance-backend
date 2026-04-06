@@ -73,3 +73,38 @@ exports.changeStatus = async (req, res, next) => {
   }
 
 };
+
+exports.updateRole = async (
+  req,
+  res,
+  next
+) => {
+
+  try {
+
+    const {
+      role
+    } = req.body;
+
+    const user =
+      await userService.updateRole(
+        req.params.id,
+        role
+      );
+
+    res.json({
+
+      message:
+        "Role updated successfully",
+
+      user
+
+    });
+
+  } catch (error) {
+
+    next(error);
+
+  }
+
+};

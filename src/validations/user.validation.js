@@ -17,3 +17,17 @@ exports.userSchema =
       )
 
   });
+
+  exports.roleSchema =
+  Joi.object({
+
+    role:
+      Joi.string()
+        .valid(
+          "ADMIN",
+          "ANALYST",
+          "VIEWER"
+        )
+        .required()
+
+  });

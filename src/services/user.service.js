@@ -47,3 +47,24 @@ exports.changeStatus = async (
   return user;
 
 };
+
+exports.updateRole = async (
+  id,
+  role
+) => {
+
+  const user =
+    await User.findByPk(id);
+
+  if (!user)
+    throw new Error(
+      "User not found"
+    );
+
+  user.role = role;
+
+  await user.save();
+
+  return user;
+
+};

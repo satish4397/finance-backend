@@ -42,4 +42,11 @@ router.patch(
   controller.changeStatus
 );
 
+router.patch(
+  "/:id/role",
+  auth,
+  role("ADMIN"),
+  controller.updateRole
+);
+
 module.exports = router;
